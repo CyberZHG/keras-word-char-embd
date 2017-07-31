@@ -10,6 +10,7 @@ install:
   - pip install pycodestyle
   - pip install coverage
   - pip install coveralls
+  - pip install keras-word-char-embd
 before_script:
   - bash lint.sh
 script:

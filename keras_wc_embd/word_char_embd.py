@@ -54,6 +54,8 @@ def get_embedding_layer(word_dict_len,
                         char_embd_dim=30,
                         char_hidden_dim=150,
                         rnn='lstm',
+                        word_embd_weights=None,
+                        char_embd_weights=None,
                         mask_zeros=True):
     """Get the merged embedding layer.
 
@@ -63,11 +65,21 @@ def get_embedding_layer(word_dict_len,
     :param word_embd_dim: The dimensions of the word embedding.
     :param char_embd_dim: The dimensions of the character embedding
     :param char_hidden_dim: The dimensions of the hidden states of RNN in one direction.
+    :param word_embd_weights: A numpy array representing the pre-trained embeddings for words.
+    :param char_embd_weights: A numpy array representing the pre-trained embeddings for characters.
     :param rnn: The type of the recurrent layer, 'lstm' or 'gru'.
     :param mask_zeros: Whether enable the mask.
 
     :return inputs, embd_layer: The keras layer.
     """
+    if word_embd_weights is not None:
+        assert word_embd_weights.shape == (word_dict_len, word_embd_dim)
+        word_embd_weights = [word_embd_weights]
+
+    if char_embd_weights is not None:
+        assert char_embd_weights.shape == (char_dict_len, char_embd_dim)
+        char_embd_weights = [char_embd_weights]
+
     word_input_layer = keras.layers.Input(
         shape=(None,),
         name='Input_Word',
@@ -81,12 +93,16 @@ def get_embedding_layer(word_dict_len,
         input_dim=word_dict_len,
         output_dim=word_embd_dim,
         mask_zero=mask_zeros,
+        weights=word_embd_weights,
+        trainable=word_embd_weights is None,
         name='Embedding_Word',
     )(word_input_layer)
     char_embd_layer = keras.layers.Embedding(
         input_dim=char_dict_len,
         output_dim=char_embd_dim,
         mask_zero=mask_zeros,
+        weights=char_embd_weights,
+        trainable=char_embd_weights is None,
         name='Embedding_Char_Pre',
     )(char_input_layer)
     if rnn == 'lstm':

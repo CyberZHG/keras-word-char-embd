@@ -1,4 +1,5 @@
 import unittest
+import numpy
 from keras_wc_embd import get_embedding_layer
 
 
@@ -30,3 +31,43 @@ class TestGetEmbeddingLayer(unittest.TestCase):
         self.assertEqual(inputs[0]._keras_shape, (None, None))
         self.assertEqual(inputs[1]._keras_shape, (None, None, 7))
         self.assertEqual(embd_layer._keras_shape, (None, None, 600))
+
+    def test_pre_trained_shape(self):
+        get_embedding_layer(
+            word_dict_len=3,
+            char_dict_len=5,
+            max_word_len=5,
+            word_embd_dim=150,
+            char_embd_dim=25,
+            char_hidden_dim=75,
+            word_embd_weights=numpy.random.random((3, 150)),
+            char_embd_weights=numpy.random.random((5, 25)),
+        )
+
+        def word_embd_wrong_shape():
+            get_embedding_layer(
+                word_dict_len=3,
+                char_dict_len=5,
+                max_word_len=5,
+                word_embd_dim=150,
+                char_embd_dim=25,
+                char_hidden_dim=75,
+                word_embd_weights=numpy.random.random((3, 100)),
+                char_embd_weights=numpy.random.random((5, 25)),
+            )
+
+        self.assertRaises(AssertionError, word_embd_wrong_shape)
+
+        def char_embd_wrong_shape():
+            get_embedding_layer(
+                word_dict_len=3,
+                char_dict_len=5,
+                max_word_len=5,
+                word_embd_dim=150,
+                char_embd_dim=25,
+                char_hidden_dim=75,
+                word_embd_weights=numpy.random.random((3, 150)),
+                char_embd_weights=numpy.random.random((7, 25)),
+            )
+
+        self.assertRaises(AssertionError, char_embd_wrong_shape)
