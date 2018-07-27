@@ -48,4 +48,18 @@ def get_batch_input(sentences,
         for _ in range(sentence_num)
     ]
 
+    for sentence_index, sentence in enumerate(sentences):
+        for word_index, word in enumerate(sentence):
+            if ignore_word_case:
+                word_key = word.lower()
+            else:
+                word_key = word
+            word_pos = word_dict.get(word_key, word_unknown)
+            word_embd_input[sentence_index][word_index][word_pos] = 1.0
+            for char_index, char in enumerate(word):
+                if ignore_char_case:
+                    char = char.lower()
+                char_pos = char_dict.get(char, char_unknown)
+                char_embd_input[sentence_index][word_index][char_index][char_pos] = 1.0
+
     return numpy.asarray(word_embd_input), numpy.asarray(char_embd_input)
