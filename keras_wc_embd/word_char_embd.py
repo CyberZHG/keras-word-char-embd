@@ -120,7 +120,7 @@ def get_embedding_layer(word_dict_len,
     return [word_input_layer, char_input_layer], embd_layer
 
 
-def get_dicts_generator(word_min_freq=2,
+def get_dicts_generator(word_min_freq=4,
                         char_min_freq=2,
                         word_ignore_case=False,
                         char_ignore_case=False):

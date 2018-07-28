@@ -8,10 +8,7 @@ from keras_wc_embd import get_word_list_eng,\
     get_batch_input,\
     get_embedding_layer
 
-
 DEBUG = True
-
-MODEL_NAME = 'sentiment_analysis.h5'
 
 DATA_ROOT = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'dataset', 'aclImdb')
 TRAIN_ROOT = os.path.join(DATA_ROOT, 'train')
@@ -38,14 +35,14 @@ val_steps = val_num * 2 // batch_size
 
 if DEBUG:
     epoch_num = 1
-    train_num //= 100
-    val_num //= 100
-    train_steps //= 100
-    val_steps //= 100
-    train_pos_files = train_pos_files[:len(train_pos_files) // 100]
-    train_neg_files = train_neg_files[:len(train_neg_files) // 100]
-    val_pos_files = val_pos_files[:len(val_pos_files) // 100]
-    val_neg_files = val_neg_files[:len(val_neg_files) // 100]
+    train_num //= 10
+    val_num //= 10
+    train_steps //= 10
+    val_steps //= 10
+    train_pos_files = train_pos_files[:len(train_pos_files) // 10]
+    train_neg_files = train_neg_files[:len(train_neg_files) // 10]
+    val_pos_files = val_pos_files[:len(val_pos_files) // 10]
+    val_neg_files = val_neg_files[:len(val_neg_files) // 10]
 
 print('Train: %d  Validate: %d' % (train_num, val_num))
 
@@ -141,7 +138,7 @@ test_pos_files = os.listdir(os.path.join(TEST_ROOT, 'pos'))
 test_neg_files = os.listdir(os.path.join(TEST_ROOT, 'neg'))
 test_num = len(test_pos_files)
 if DEBUG:
-    test_num //= 100
+    test_num //= 10
 test_steps = test_num * 2 // batch_size
 
 
