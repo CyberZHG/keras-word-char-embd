@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='keras_word_char_embd',
+    name='keras-word-char-embd',
     version='0.0.4',
     packages=['keras_wc_embd'],
     url='https://github.com/PoWWoP/keras_word_char_embd',
