@@ -94,6 +94,26 @@ word_embd_input, char_embd_input = get_batch_input(
 )
 ```
 
+#### `get_embedding_weights_from_file`
+
+A helper function that loads pre-trained embeddings for initializing the weights of the embedding layer. The format of the file should be similar to GloVe.
+
+```python
+from keras_wc_embd import get_embedding_layer, get_embedding_weights_from_file
+
+word_embd_weights = get_embedding_weights_from_file(word_dict, 'glove.6B.100d.txt', ignore_case=True)
+inputs, embd_layer = get_embedding_layer(
+    word_dict_len=len(word_dict),
+    char_dict_len=len(char_dict),
+    max_word_len=max_word_len,
+    word_embd_dim=300,
+    char_embd_dim=50,
+    char_hidden_dim=150,
+    word_embd_weights=word_embd_weights,
+    rnn='lstm',
+)
+```
+
 ### Citation
 
 Several papers have done the same thing. Just choose the one you have seen.
