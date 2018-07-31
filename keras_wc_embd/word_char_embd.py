@@ -1,5 +1,6 @@
 import keras
 import numpy
+import codecs
 
 
 def get_batch_input(sentences,
@@ -228,7 +229,7 @@ def get_embedding_weights_from_file(word_dict, file_path, ignore_case=False):
     :return weights: A numpy array.
     """
     pre_trained = {}
-    with open(file_path, 'r') as reader:
+    with codecs.open(file_path, 'r', 'utf8') as reader:
         for line in reader:
             line = line.strip()
             if not line:
