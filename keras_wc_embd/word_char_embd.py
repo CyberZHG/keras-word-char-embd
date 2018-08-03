@@ -57,6 +57,8 @@ def get_embedding_layer(word_dict_len,
                         rnn='lstm',
                         word_embd_weights=None,
                         char_embd_weights=None,
+                        word_embd_trainable=None,
+                        char_embd_trainable=None,
                         mask_zeros=True):
     """Get the merged embedding layer.
 
@@ -68,6 +70,8 @@ def get_embedding_layer(word_dict_len,
     :param char_hidden_dim: The dimensions of the hidden states of RNN in one direction.
     :param word_embd_weights: A numpy array representing the pre-trained embeddings for words.
     :param char_embd_weights: A numpy array representing the pre-trained embeddings for characters.
+    :param word_embd_trainable: Whether the word embedding layer is trainable.
+    :param char_embd_trainable: Whether the character embedding layer is trainable.
     :param rnn: The type of the recurrent layer, 'lstm' or 'gru'.
     :param mask_zeros: Whether enable the mask.
 
@@ -76,10 +80,14 @@ def get_embedding_layer(word_dict_len,
     if word_embd_weights is not None:
         assert word_embd_weights.shape == (word_dict_len, word_embd_dim)
         word_embd_weights = [word_embd_weights]
+    if word_embd_trainable is None:
+        word_embd_trainable = word_embd_weights is None
 
     if char_embd_weights is not None:
         assert char_embd_weights.shape == (char_dict_len, char_embd_dim)
         char_embd_weights = [char_embd_weights]
+    if char_embd_trainable is None:
+        char_embd_trainable = char_embd_weights is None
 
     word_input_layer = keras.layers.Input(
         shape=(None,),
@@ -95,7 +103,7 @@ def get_embedding_layer(word_dict_len,
         output_dim=word_embd_dim,
         mask_zero=mask_zeros,
         weights=word_embd_weights,
-        trainable=word_embd_weights is None,
+        trainable=word_embd_trainable,
         name='Embedding_Word',
     )(word_input_layer)
     char_embd_layer = keras.layers.Embedding(
@@ -103,7 +111,7 @@ def get_embedding_layer(word_dict_len,
         output_dim=char_embd_dim,
         mask_zero=mask_zeros,
         weights=char_embd_weights,
-        trainable=char_embd_weights is None,
+        trainable=char_embd_trainable,
         name='Embedding_Char_Pre',
     )(char_input_layer)
     if rnn == 'lstm':
