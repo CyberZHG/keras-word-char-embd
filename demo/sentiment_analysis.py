@@ -29,7 +29,7 @@ train_pos_files = train_pos_files[:train_num]
 train_neg_files = train_neg_files[:train_num]
 
 epoch_num = 10
-batch_size = 16
+batch_size = 64
 train_steps = train_num * 2 // batch_size
 val_steps = val_num * 2 // batch_size
 
@@ -57,11 +57,11 @@ dicts_generator = get_dicts_generator(
 for file_name in train_pos_files:
     with codecs.open(os.path.join(TRAIN_ROOT, 'pos', file_name), 'r', 'utf8') as reader:
         text = reader.read().strip()
-    dicts_generator(sentence=get_word_list_eng(text))
+        dicts_generator(sentence=get_word_list_eng(text))
 for file_name in train_neg_files:
     with codecs.open(os.path.join(TRAIN_ROOT, 'neg', file_name), 'r', 'utf8') as reader:
         text = reader.read().strip()
-    dicts_generator(sentence=get_word_list_eng(text))
+        dicts_generator(sentence=get_word_list_eng(text))
 word_dict, char_dict, max_word_len = dicts_generator(return_dict=True)
 print('Word dict size: %d  Char dict size: %d  Max word len: %d' % (len(word_dict), len(char_dict), max_word_len))
 
@@ -177,7 +177,7 @@ predicts = model.predict_generator(
 predicts = numpy.argmax(predicts, axis=-1).tolist()
 correct = 0
 for i in range(len(predicts)):
-    if i % batch_size < batch_size:
+    if i % batch_size < batch_size // 2:
         expect = 1
     else:
         expect = 0
