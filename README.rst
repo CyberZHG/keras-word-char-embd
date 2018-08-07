@@ -3,13 +3,13 @@ Word/Character Embeddings in Keras
 ==================================
 
 
-.. image:: https://travis-ci.org/PoWWoP/keras_word_char_embd.svg
-   :target: https://travis-ci.org/PoWWoP/keras_word_char_embd
+.. image:: https://travis-ci.org/PoWWoP/keras-word-char-embd.svg
+   :target: https://travis-ci.org/PoWWoP/keras-word-char-embd
    :alt: Travis
 
 
-.. image:: https://coveralls.io/repos/github/PoWWoP/keras_word_char_embd/badge.svg?branch=master
-   :target: https://coveralls.io/github/PoWWoP/keras_word_char_embd
+.. image:: https://coveralls.io/repos/github/PoWWoP/keras-word-char-embd/badge.svg?branch=master
+   :target: https://coveralls.io/github/PoWWoP/keras-word-char-embd
    :alt: Coverage
 
 
@@ -31,7 +31,7 @@ Install
 
 .. code-block:: bash
 
-   pip install keras_word_char_embd
+   pip install keras-word-char-embd
 
 Demo
 ^^^^

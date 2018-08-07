@@ -1,7 +1,7 @@
 # Word/Character Embeddings in Keras
 
-[![Travis](https://travis-ci.org/PoWWoP/keras_word_char_embd.svg)](https://travis-ci.org/PoWWoP/keras_word_char_embd)
-[![Coverage](https://coveralls.io/repos/github/PoWWoP/keras_word_char_embd/badge.svg?branch=master)](https://coveralls.io/github/PoWWoP/keras_word_char_embd)
+[![Travis](https://travis-ci.org/PoWWoP/keras-word-char-embd.svg)](https://travis-ci.org/PoWWoP/keras-word-char-embd)
+[![Coverage](https://coveralls.io/repos/github/PoWWoP/keras-word-char-embd/badge.svg?branch=master)](https://coveralls.io/github/PoWWoP/keras-word-char-embd)
 
 ## Introduction
 
@@ -14,7 +14,7 @@ The repository contains some functions which could be used to generate the first
 ## Install
 
 ```bash
-pip install keras_word_char_embd
+pip install keras-word-char-embd
 ```
 
 ### Demo
