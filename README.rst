@@ -3,13 +3,13 @@ Word/Character Embeddings in Keras
 ==================================
 
 
-.. image:: https://travis-ci.org/PoWWoP/keras-word-char-embd.svg
-   :target: https://travis-ci.org/PoWWoP/keras-word-char-embd
+.. image:: https://travis-ci.org/CyberZHG/keras-word-char-embd.svg
+   :target: https://travis-ci.org/CyberZHG/keras-word-char-embd
    :alt: Travis
 
 
-.. image:: https://coveralls.io/repos/github/PoWWoP/keras-word-char-embd/badge.svg?branch=master
-   :target: https://coveralls.io/github/PoWWoP/keras-word-char-embd
+.. image:: https://coveralls.io/repos/github/CyberZHG/keras-word-char-embd/badge.svg?branch=master
+   :target: https://coveralls.io/github/CyberZHG/keras-word-char-embd
    :alt: Coverage
 
 

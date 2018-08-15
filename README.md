@@ -1,7 +1,7 @@
 # Word/Character Embeddings in Keras
 
-[![Travis](https://travis-ci.org/PoWWoP/keras-word-char-embd.svg)](https://travis-ci.org/PoWWoP/keras-word-char-embd)
-[![Coverage](https://coveralls.io/repos/github/PoWWoP/keras-word-char-embd/badge.svg?branch=master)](https://coveralls.io/github/PoWWoP/keras-word-char-embd)
+[![Travis](https://travis-ci.org/CyberZHG/keras-word-char-embd.svg)](https://travis-ci.org/CyberZHG/keras-word-char-embd)
+[![Coverage](https://coveralls.io/repos/github/CyberZHG/keras-word-char-embd/badge.svg?branch=master)](https://coveralls.io/github/CyberZHG/keras-word-char-embd)
 
 ## Introduction
 
