@@ -56,7 +56,7 @@ class TestGetEmbeddingLayer(unittest.TestCase):
                 char_embd_weights=numpy.random.random((5, 25)),
             )
 
-        self.assertRaises(AssertionError, word_embd_wrong_shape)
+        self.assertRaises(ValueError, word_embd_wrong_shape)
 
         def char_embd_wrong_shape():
             get_embedding_layer(
@@ -70,4 +70,4 @@ class TestGetEmbeddingLayer(unittest.TestCase):
                 char_embd_weights=numpy.random.random((7, 25)),
             )
 
-        self.assertRaises(AssertionError, char_embd_wrong_shape)
+        self.assertRaises(ValueError, char_embd_wrong_shape)
