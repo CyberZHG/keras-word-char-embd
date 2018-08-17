@@ -176,11 +176,11 @@ predicts = model.predict_generator(
 )
 predicts = numpy.argmax(predicts, axis=-1).tolist()
 correct = 0
-for i in range(len(predicts)):
+for i, predict in enumerate(predicts):
     if i % batch_size < batch_size:
         expect = 1
     else:
         expect = 0
-    if predicts[i] == expect:
+    if predict == expect:
         correct += 1
 print('Accuracy: %.3f' % (1.0 * correct / len(predicts)))

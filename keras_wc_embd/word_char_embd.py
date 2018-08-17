@@ -78,13 +78,11 @@ def get_embedding_layer(word_dict_len,
     :return inputs, embd_layer: The keras layer.
     """
     if word_embd_weights is not None:
-        assert word_embd_weights.shape == (word_dict_len, word_embd_dim)
         word_embd_weights = [word_embd_weights]
     if word_embd_trainable is None:
         word_embd_trainable = word_embd_weights is None
 
     if char_embd_weights is not None:
-        assert char_embd_weights.shape == (char_dict_len, char_embd_dim)
         char_embd_weights = [char_embd_weights]
     if char_embd_trainable is None:
         char_embd_trainable = char_embd_weights is None
@@ -246,7 +244,6 @@ def get_embedding_weights_from_file(word_dict, file_path, ignore_case=False):
             if ignore_case:
                 parts[0] = parts[0].lower()
             pre_trained[parts[0]] = list(map(float, parts[1:]))
-    assert len(pre_trained) > 0
     embd_dim = len(next(iter(pre_trained.values())))
     weights = [[0.0] * embd_dim for _ in range(max(word_dict.values()) + 1)]
     for word, index in word_dict.items():
