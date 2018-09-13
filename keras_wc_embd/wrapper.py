@@ -53,7 +53,7 @@ class WordCharEmbd(object):
             self.word_dict, self.char_dict, self.max_word_len = self.dict_generator(return_dict=True)
         return self.word_dict, self.char_dict
 
-    def get_word_dicts(self):
+    def get_word_dict(self):
         """Get the word dictionary.
 
         :return word_dict:
@@ -61,7 +61,7 @@ class WordCharEmbd(object):
         word_dict, _ = self.get_dicts()
         return word_dict
 
-    def get_char_dicts(self):
+    def get_char_dict(self):
         """Get the character dictionary.
 
         :return char_dict:
@@ -98,15 +98,15 @@ class WordCharEmbd(object):
         :return inputs, embd_layer: The keras layer.
         """
         if word_embd_file_path is not None:
-            word_embd_weights = get_embedding_weights_from_file(word_dict=self.word_dict,
+            word_embd_weights = get_embedding_weights_from_file(word_dict=self.get_word_dict(),
                                                                 file_path=word_embd_file_path,
                                                                 ignore_case=self.word_ignore_case)
         if char_embd_file_path is not None:
-            char_embd_weights = get_embedding_weights_from_file(word_dict=self.char_dict,
+            char_embd_weights = get_embedding_weights_from_file(word_dict=self.get_char_dict(),
                                                                 file_path=char_embd_file_path,
                                                                 ignore_case=self.char_ignore_case)
-        return get_embedding_layer(word_dict_len=len(self.word_dict),
-                                   char_dict_len=len(self.char_dict),
+        return get_embedding_layer(word_dict_len=len(self.get_word_dict()),
+                                   char_dict_len=len(self.get_char_dict()),
                                    max_word_len=self.max_word_len,
                                    word_embd_dim=word_embd_dim,
                                    char_embd_dim=char_embd_dim,
@@ -127,7 +127,7 @@ class WordCharEmbd(object):
         """
         return get_batch_input(sentences,
                                max_word_len=self.max_word_len,
-                               word_dict=self.word_dict,
-                               char_dict=self.char_dict,
+                               word_dict=self.get_word_dict(),
+                               char_dict=self.get_char_dict(),
                                word_ignore_case=self.word_ignore_case,
                                char_ignore_case=self.char_ignore_case)
