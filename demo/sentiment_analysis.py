@@ -3,10 +3,7 @@ import codecs
 import random
 import numpy
 import keras
-from keras_wc_embd import get_word_list_eng,\
-    get_dicts_generator,\
-    get_batch_input,\
-    get_embedding_layer
+from keras_wc_embd import WordCharEmbd, get_word_list_eng
 
 DEBUG = True
 
@@ -48,7 +45,7 @@ print('Train: %d  Validate: %d' % (train_num, val_num))
 
 # Generate dictionaries for words and characters
 print('Get dictionaries....')
-dicts_generator = get_dicts_generator(
+wc_embd = WordCharEmbd(
     word_min_freq=5,
     char_min_freq=2,
     word_ignore_case=True,
@@ -57,20 +54,15 @@ dicts_generator = get_dicts_generator(
 for file_name in train_pos_files:
     with codecs.open(os.path.join(TRAIN_ROOT, 'pos', file_name), 'r', 'utf8') as reader:
         text = reader.read().strip()
-        dicts_generator(sentence=get_word_list_eng(text))
+        wc_embd.update_dicts(get_word_list_eng(text))
 for file_name in train_neg_files:
     with codecs.open(os.path.join(TRAIN_ROOT, 'neg', file_name), 'r', 'utf8') as reader:
         text = reader.read().strip()
-        dicts_generator(sentence=get_word_list_eng(text))
-word_dict, char_dict, max_word_len = dicts_generator(return_dict=True)
-print('Word dict size: %d  Char dict size: %d  Max word len: %d' % (len(word_dict), len(char_dict), max_word_len))
+        wc_embd.update_dicts(get_word_list_eng(text))
 
 # Create model for classification
 print('Create model...')
-inputs, embd_layer = get_embedding_layer(
-    word_dict_len=len(word_dict),
-    char_dict_len=len(char_dict),
-    max_word_len=max_word_len,
+inputs, embd_layer = wc_embd.get_embedding_layer(
     word_embd_dim=150,
     char_embd_dim=30,
     char_hidden_dim=75,
@@ -113,15 +105,7 @@ def train_batch_generator(batch_size=32, training=True):
             with codecs.open(os.path.join(TRAIN_ROOT, 'neg', file_name), 'r', 'utf8') as reader:
                 text = reader.read().strip()
             sentences.append(get_word_list_eng(text))
-        word_input, char_input = get_batch_input(
-            sentences=sentences,
-            max_word_len=max_word_len,
-            word_dict=word_dict,
-            char_dict=char_dict,
-            word_ignore_case=True,
-            char_ignore_case=False,
-        )
-        yield [word_input, char_input], keras.utils.to_categorical([1] * batch_size + [0] * batch_size)
+        yield wc_embd.get_batch_input(sentences), keras.utils.to_categorical([1] * batch_size + [0] * batch_size)
 
 
 model.fit_generator(
@@ -158,15 +142,7 @@ def test_batch_generator(batch_size=32):
             with codecs.open(os.path.join(TEST_ROOT, 'neg', file_name), 'r', 'utf8') as reader:
                 text = reader.read().strip()
             sentences.append(get_word_list_eng(text))
-        word_input, char_input = get_batch_input(
-            sentences=sentences,
-            max_word_len=max_word_len,
-            word_dict=word_dict,
-            char_dict=char_dict,
-            word_ignore_case=True,
-            char_ignore_case=False,
-        )
-        yield [word_input, char_input]
+        yield wc_embd.get_batch_input(sentences)
 
 
 predicts = model.predict_generator(

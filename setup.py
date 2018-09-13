@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='keras-word-char-embd',
-    version='0.0.11',
+    version='0.12',
     packages=['keras_wc_embd'],
     url='https://github.com/CyberZHG/keras-word-char-embd',
     license='MIT',
