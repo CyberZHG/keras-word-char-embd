@@ -18,8 +18,8 @@ class TestWrapper(unittest.TestCase):
         ]
         for sentence in sentences:
             wc_embd.update_dicts(sentence)
-        word_dict = wc_embd.get_word_dicts()
-        char_dict = wc_embd.get_char_dicts()
+        word_dict = wc_embd.get_word_dict()
+        char_dict = wc_embd.get_char_dict()
         wc_embd.set_dicts(word_dict, char_dict)
         current = os.path.dirname(os.path.abspath(__file__))
         word_embd_file_path = os.path.join(current, 'demo_word_embd.txt')

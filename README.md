@@ -116,7 +116,7 @@ inputs, embd_layer = get_embedding_layer(
 
 ### Wrapper Class `WordCharEmbd`
 
-There is a wrapper class that makes the things easier.
+There is a wrapper class that makes things easier.
 
 ```python
 from keras_wc_embd import WordCharEmbd

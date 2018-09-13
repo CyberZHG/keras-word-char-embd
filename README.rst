@@ -139,7 +139,7 @@ A helper function that loads pre-trained embeddings for initializing the weights
 Wrapper Class ``WordCharEmbd``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-There is a wrapper class that makes the things easier.
+There is a wrapper class that makes things easier.
 
 .. code-block:: python
 
