@@ -45,7 +45,7 @@ def get_batch_input(sentences,
                     char = char.lower()
                 char_embd_input[sentence_index][word_index][char_index] = char_dict.get(char, char_unknown)
 
-    return numpy.asarray(word_embd_input), numpy.asarray(char_embd_input)
+    return [numpy.asarray(word_embd_input), numpy.asarray(char_embd_input)]
 
 
 def get_embedding_layer(word_dict_len,
@@ -136,10 +136,9 @@ def get_embedding_layer(word_dict_len,
         layer=char_rnn_layer,
         name='Embedding_Char'
     )(char_embd_layer)
-    embd_layer = keras.layers.concatenate(
-        inputs=[word_embd_layer, char_embd_layer],
+    embd_layer = keras.layers.Concatenate(
         name='Embedding',
-    )
+    )([word_embd_layer, char_embd_layer])
     return [word_input_layer, char_input_layer], embd_layer
 
 

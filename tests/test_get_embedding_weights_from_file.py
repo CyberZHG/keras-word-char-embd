@@ -18,7 +18,7 @@ class TestGetEmbeddingWeightsFromFile(unittest.TestCase):
         )
         for sentence in sentences:
             dict_generator(sentence)
-        word_dict, char_dict, max_word_len = dict_generator(return_dict=True)
+        word_dict, char_dict, _ = dict_generator(return_dict=True)
 
         current = os.path.dirname(os.path.abspath(__file__))
         word_embd_file_path = os.path.join(current, 'demo_word_embd.txt')

@@ -22,9 +22,9 @@ Introduction
    :alt: image
 
 
-Out-of-vocabulary words have bad effects on word embeddings. Sometimes both word and character features are used. The characters in a word are first mapped to character embeddings, then a bidirectional recurrent neural layer is used to encode the character embeddings to a single vector. The final feature of a word is the concatenation of word embedding and encoded character feature.
+Out-of-vocabulary words are drawbacks of word embeddings. Sometimes both word and character features are used. The characters in a word are first mapped to character embeddings, then a bidirectional recurrent neural layer is used to encode the character embeddings to a single vector. The final feature of a word is the concatenation of the word embedding and the encoded character feature.
 
-The repository contains some functions which could be used to generate the first few layers that encodes the features of words.
+The repository contains some functions and a wrapper class that could be used to generate the first few layers that encodes the features of words and characters.
 
 Install
 -------
@@ -134,6 +134,50 @@ A helper function that loads pre-trained embeddings for initializing the weights
        char_hidden_dim=150,
        word_embd_weights=word_embd_weights,
        rnn='lstm',
+   )
+
+Wrapper Class ``WordCharEmbd``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+There is a wrapper class that makes the things easier.
+
+.. code-block:: python
+
+   from keras_wc_embd import WordCharEmbd
+
+   sentences = [
+       ['All', 'work', 'and', 'no', 'play'],
+       ['makes', 'Jack', 'a', 'dull', 'boy', '.'],
+   ]
+   wc_embd = WordCharEmbd(
+       word_min_freq=2,
+       char_min_freq=2,
+       word_ignore_case=False,
+       char_ignore_case=False,
+   )
+   for sentence in sentences:
+       wc_embd.update_dicts(sentence)
+
+   inputs, embd_layer = wc_embd.get_embedding_layer()
+   lstm_layer = keras.layers.LSTM(units=5, name='LSTM')(embd_layer)
+   softmax_layer = keras.layers.Dense(units=2, activation='softmax', name='Softmax')(lstm_layer)
+   model = keras.models.Model(inputs=inputs, outputs=softmax_layer)
+   model.compile(
+       optimizer='adam',
+       loss=keras.losses.sparse_categorical_crossentropy,
+       metrics=[keras.metrics.sparse_categorical_accuracy],
+   )
+   model.summary()
+
+
+   def batch_generator():
+       while True:
+           yield wc_embd.get_batch_input(sentences), np.asarray([0, 1])
+
+   model.fit_generator(
+       generator=batch_generator(),
+       steps_per_epoch=200,
+       epochs=1,
    )
 
 Citation
