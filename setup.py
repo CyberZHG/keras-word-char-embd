@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='keras-word-char-embd',
-    version='0.12',
+    version='0.13',
     packages=['keras_wc_embd'],
     url='https://github.com/CyberZHG/keras-word-char-embd',
     license='MIT',
@@ -14,8 +14,8 @@ setup(
         'keras',
     ],
     classifiers=(
-        "Programming Language :: Python :: 2",
-        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.6",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ),
