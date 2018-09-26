@@ -147,11 +147,11 @@ def get_embedding_layer(word_dict_len,
                 name='Dense_Char',
             ),
         ]
-    elif type(char_hidden_layer_type) is list or isinstance(char_hidden_layer_type, keras.layers.Layer):
+    elif isinstance(char_hidden_layer_type, list) or isinstance(char_hidden_layer_type, keras.layers.Layer):
         char_hidden_layer = char_hidden_layer_type
     else:
         raise NotImplementedError('Unknown character hidden layer type: %s' % char_hidden_layer_type)
-    if type(char_hidden_layer) is not list:
+    if not isinstance(char_hidden_layer, list):
         char_hidden_layer = [char_hidden_layer]
     for i, layer in enumerate(char_hidden_layer):
         if i == len(char_hidden_layer) - 1:
