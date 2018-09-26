@@ -79,6 +79,8 @@ model.summary()
 
 The output shape of `embd_layer` should be `(None, None, 600)`, which represents the batch size, the length of sentence and the length of encoded word feature.
 
+`char_hidden_layer_type` could be 'lstm', 'gru', 'cnn', a Keras layer or a list of Keras layers.
+
 #### `get_batch_input`
 
 The function is used to generate the batch inputs for the model.
@@ -110,7 +112,7 @@ inputs, embd_layer = get_embedding_layer(
     char_embd_dim=50,
     char_hidden_dim=150,
     word_embd_weights=word_embd_weights,
-    rnn='lstm',
+    char_hidden_layer_type='lstm',
 )
 ```
 
@@ -157,6 +159,6 @@ model.fit_generator(
 )
 ```
 
-### Citation
+## Citation
 
 Several papers have done the same thing. Just choose the one you have seen.

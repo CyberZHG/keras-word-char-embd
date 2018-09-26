@@ -1,11 +1,12 @@
 import unittest
 import numpy
+import keras
 from keras_wc_embd import get_embedding_layer
 
 
 class TestGetEmbeddingLayer(unittest.TestCase):
 
-    def test_shape(self):
+    def test_shape_rnn(self):
         inputs, embd_layer = get_embedding_layer(
             word_dict_len=3,
             char_dict_len=5,
@@ -25,7 +26,7 @@ class TestGetEmbeddingLayer(unittest.TestCase):
             word_embd_dim=300,
             char_embd_dim=50,
             char_hidden_dim=150,
-            rnn='gru',
+            char_hidden_layer_type='gru',
         )
         self.assertEqual(len(inputs), 2)
         self.assertEqual(inputs[0]._keras_shape, (None, None))
@@ -71,3 +72,73 @@ class TestGetEmbeddingLayer(unittest.TestCase):
             )
 
         self.assertRaises(ValueError, char_embd_wrong_shape)
+
+    def test_shape_cnn(self):
+        inputs, embd_layer = get_embedding_layer(
+            word_dict_len=3,
+            char_dict_len=5,
+            max_word_len=7,
+            word_embd_dim=300,
+            char_embd_dim=50,
+            char_hidden_dim=150,
+            char_hidden_layer_type='cnn',
+            char_mask_zero=False,
+        )
+        self.assertEqual(len(inputs), 2)
+        self.assertEqual(inputs[0]._keras_shape, (None, None))
+        self.assertEqual(inputs[1]._keras_shape, (None, None, 7))
+        self.assertEqual(embd_layer._keras_shape, (None, None, 450))
+
+    def test_custom(self):
+        layers = [
+            keras.layers.Conv1D(
+                filters=16,
+                kernel_size=3,
+                activation='relu',
+            ),
+            keras.layers.Conv1D(
+                filters=16,
+                kernel_size=3,
+                activation='relu',
+            ),
+            keras.layers.Flatten(),
+            keras.layers.Dense(
+                units=50,
+                name='Dense_Char',
+            ),
+        ]
+        inputs, embd_layer = get_embedding_layer(
+            word_dict_len=3,
+            char_dict_len=5,
+            max_word_len=7,
+            word_embd_dim=300,
+            char_embd_dim=50,
+            char_hidden_layer_type=layers,
+            char_mask_zero=False,
+        )
+        self.assertEqual(len(inputs), 2)
+        self.assertEqual(inputs[0]._keras_shape, (None, None))
+        self.assertEqual(inputs[1]._keras_shape, (None, None, 7))
+        self.assertEqual(embd_layer._keras_shape, (None, None, 350))
+        inputs, embd_layer = get_embedding_layer(
+            word_dict_len=3,
+            char_dict_len=5,
+            max_word_len=7,
+            word_embd_dim=300,
+            char_embd_dim=50,
+            char_hidden_layer_type=keras.layers.GRU(units=30),
+            char_mask_zero=False,
+        )
+        self.assertEqual(len(inputs), 2)
+        self.assertEqual(inputs[0]._keras_shape, (None, None))
+        self.assertEqual(inputs[1]._keras_shape, (None, None, 7))
+        self.assertEqual(embd_layer._keras_shape, (None, None, 330))
+
+    def test_not_implemented(self):
+        with self.assertRaises(NotImplementedError):
+            get_embedding_layer(
+                word_dict_len=3,
+                char_dict_len=5,
+                max_word_len=7,
+                char_hidden_layer_type='Jack',
+            )

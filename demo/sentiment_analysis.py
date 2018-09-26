@@ -66,7 +66,7 @@ inputs, embd_layer = wc_embd.get_embedding_layer(
     word_embd_dim=150,
     char_embd_dim=30,
     char_hidden_dim=75,
-    rnn='lstm'
+    char_hidden_layer_type='lstm'
 )
 lstm_layer = keras.layers.Bidirectional(
     keras.layers.LSTM(units=50),

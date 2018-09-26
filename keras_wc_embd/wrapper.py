@@ -73,14 +73,15 @@ class WordCharEmbd(object):
                             word_embd_dim=300,
                             char_embd_dim=30,
                             char_hidden_dim=150,
-                            rnn='lstm',
+                            char_hidden_layer_type='lstm',
                             word_embd_weights=None,
                             word_embd_file_path=None,
                             char_embd_weights=None,
                             char_embd_file_path=None,
                             word_embd_trainable=None,
                             char_embd_trainable=None,
-                            mask_zeros=True):
+                            word_mask_zero=True,
+                            char_mask_zero=True,):
         """Get the merged embedding layer.
 
         :param word_embd_dim: The dimensions of the word embedding.
@@ -92,8 +93,9 @@ class WordCharEmbd(object):
         :param char_embd_file_path: The file that contains the character embeddings.
         :param word_embd_trainable: Whether the word embedding layer is trainable.
         :param char_embd_trainable: Whether the character embedding layer is trainable.
-        :param rnn: The type of the recurrent layer, 'lstm' or 'gru'.
-        :param mask_zeros: Whether enable the mask.
+        :param char_hidden_layer_type: The type of the recurrent layer, 'lstm' or 'gru'.
+        :param word_mask_zero: Whether enable the mask for words.
+        :param char_mask_zero: Whether enable the mask for characters.
 
         :return inputs, embd_layer: The keras layer.
         """
@@ -111,12 +113,13 @@ class WordCharEmbd(object):
                                    word_embd_dim=word_embd_dim,
                                    char_embd_dim=char_embd_dim,
                                    char_hidden_dim=char_hidden_dim,
-                                   rnn=rnn,
+                                   char_hidden_layer_type=char_hidden_layer_type,
                                    word_embd_weights=word_embd_weights,
                                    char_embd_weights=char_embd_weights,
                                    word_embd_trainable=word_embd_trainable,
                                    char_embd_trainable=char_embd_trainable,
-                                   mask_zeros=mask_zeros)
+                                   word_mask_zero=word_mask_zero,
+                                   char_mask_zero=char_mask_zero)
 
     def get_batch_input(self, sentences):
         """Convert sentences to desired input tensors.
