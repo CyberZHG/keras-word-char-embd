@@ -71,7 +71,7 @@ inputs, embd_layer = get_embedding_layer(
     word_embd_dim=300,
     char_embd_dim=50,
     char_hidden_dim=150,
-    rnn='lstm',
+    char_hidden_layer_type='lstm',
 )
 model = keras.models.Model(inputs=inputs, outputs=embd_layer)
 model.summary()
@@ -128,8 +128,8 @@ sentences = [
     ['makes', 'Jack', 'a', 'dull', 'boy', '.'],
 ]
 wc_embd = WordCharEmbd(
-    word_min_freq=2,
-    char_min_freq=2,
+    word_min_freq=0,
+    char_min_freq=0,
     word_ignore_case=False,
     char_ignore_case=False,
 )
