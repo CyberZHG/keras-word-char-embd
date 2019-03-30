@@ -1,6 +1,39 @@
-import keras
-import numpy
 import codecs
+import numpy
+import keras
+import keras.backend as K
+
+__all__ = [
+    'MaskedConv1D', 'MaskedFlatten',
+    'get_batch_input', 'get_embedding_layer', 'get_dicts_generator',
+    'get_word_list_eng', 'get_embedding_weights_from_file',
+]
+
+
+class MaskedConv1D(keras.layers.Conv1D):
+
+    def __init__(self, **kwargs):
+        super(MaskedConv1D, self).__init__(**kwargs)
+        self.supports_masking = True
+
+    def compute_mask(self, inputs, mask=None):
+        return mask
+
+    def call(self, inputs, mask=None):
+        if mask is not None:
+            mask = K.cast(mask, K.floatx())
+            inputs *= K.expand_dims(mask, axis=-1)
+        return super(MaskedConv1D, self).call(inputs)
+
+
+class MaskedFlatten(keras.layers.Flatten):
+
+    def __init__(self, **kwargs):
+        super(MaskedFlatten, self).__init__(**kwargs)
+        self.supports_masking = True
+
+    def compute_mask(self, inputs, mask=None):
+        return mask
 
 
 def get_batch_input(sentences,
@@ -136,12 +169,12 @@ def get_embedding_layer(word_dict_len,
         )
     elif char_hidden_layer_type == 'cnn':
         char_hidden_layer = [
-            keras.layers.Conv1D(
+            MaskedConv1D(
                 filters=max(1, char_hidden_dim // 5),
                 kernel_size=3,
                 activation='relu',
             ),
-            keras.layers.Flatten(),
+            MaskedFlatten(),
             keras.layers.Dense(
                 units=char_hidden_dim,
                 name='Dense_Char',

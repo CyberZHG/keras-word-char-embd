@@ -79,7 +79,17 @@ model.summary()
 
 The output shape of `embd_layer` should be `(None, None, 600)`, which represents the batch size, the length of sentence and the length of encoded word feature.
 
-`char_hidden_layer_type` could be 'lstm', 'gru', 'cnn', a Keras layer or a list of Keras layers.
+`char_hidden_layer_type` could be `'lstm'`, `'gru'`, `'cnn'`, a Keras layer or a list of Keras layers. Remember to add `MaskedConv1D` and `MaskedFlatten` to custom objects if you are using `'cnn'`:
+
+```python
+import keras
+from keras_wc_embd import MaskedConv1D, MaskedFlatten
+
+keras.models.load_model(filepath, custom_objects={
+    'MaskedConv1D': MaskedConv1D,
+    'MaskedFlatten': MaskedFlatten,
+})
+```
 
 #### `get_batch_input`
 

@@ -82,7 +82,7 @@ class TestGetEmbeddingLayer(unittest.TestCase):
             char_embd_dim=50,
             char_hidden_dim=150,
             char_hidden_layer_type='cnn',
-            char_mask_zero=False,
+            char_mask_zero=True,
         )
         self.assertEqual(len(inputs), 2)
         self.assertEqual(inputs[0]._keras_shape, (None, None))
