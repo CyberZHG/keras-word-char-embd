@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-nosetests --with-coverage --cover-erase --cover-html --cover-html-dir=htmlcov --cover-package="keras_wc_embd" tests
+pycodestyle --max-line-length=120 keras_wc_embd tests && \
+    nosetests --nocapture --with-coverage --cover-erase --cover-html --cover-html-dir=htmlcov --cover-package=keras_wc_embd --with-doctest

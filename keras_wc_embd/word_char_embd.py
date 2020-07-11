@@ -1,7 +1,7 @@
 import codecs
 import numpy
-import keras
-import keras.backend as K
+from .backend import keras
+from .backend import backend as K
 
 __all__ = [
     'MaskedConv1D', 'MaskedFlatten',

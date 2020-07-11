@@ -16,9 +16,9 @@ class TestGetEmbeddingLayer(unittest.TestCase):
             char_hidden_dim=75,
         )
         self.assertEqual(len(inputs), 2)
-        self.assertEqual(inputs[0]._keras_shape, (None, None))
-        self.assertEqual(inputs[1]._keras_shape, (None, None, 5))
-        self.assertEqual(embd_layer._keras_shape, (None, None, 300))
+        self.assertEqual(inputs[0].shape.as_list(), [None, None])
+        self.assertEqual(inputs[1].shape.as_list(), [None, None, 5])
+        self.assertEqual(embd_layer.shape.as_list(), [None, None, 300])
         inputs, embd_layer = get_embedding_layer(
             word_dict_len=3,
             char_dict_len=5,
@@ -29,9 +29,9 @@ class TestGetEmbeddingLayer(unittest.TestCase):
             char_hidden_layer_type='gru',
         )
         self.assertEqual(len(inputs), 2)
-        self.assertEqual(inputs[0]._keras_shape, (None, None))
-        self.assertEqual(inputs[1]._keras_shape, (None, None, 7))
-        self.assertEqual(embd_layer._keras_shape, (None, None, 600))
+        self.assertEqual(inputs[0].shape.as_list(), [None, None])
+        self.assertEqual(inputs[1].shape.as_list(), [None, None, 7])
+        self.assertEqual(embd_layer.shape.as_list(), [None, None, 600])
 
     def test_pre_trained_shape(self):
         get_embedding_layer(
@@ -85,9 +85,9 @@ class TestGetEmbeddingLayer(unittest.TestCase):
             char_mask_zero=True,
         )
         self.assertEqual(len(inputs), 2)
-        self.assertEqual(inputs[0]._keras_shape, (None, None))
-        self.assertEqual(inputs[1]._keras_shape, (None, None, 7))
-        self.assertEqual(embd_layer._keras_shape, (None, None, 450))
+        self.assertEqual(inputs[0].shape.as_list(), [None, None])
+        self.assertEqual(inputs[1].shape.as_list(), [None, None, 7])
+        self.assertEqual(embd_layer.shape.as_list(), [None, None, 450])
 
     def test_custom(self):
         layers = [
@@ -117,9 +117,9 @@ class TestGetEmbeddingLayer(unittest.TestCase):
             char_mask_zero=False,
         )
         self.assertEqual(len(inputs), 2)
-        self.assertEqual(inputs[0]._keras_shape, (None, None))
-        self.assertEqual(inputs[1]._keras_shape, (None, None, 7))
-        self.assertEqual(embd_layer._keras_shape, (None, None, 350))
+        self.assertEqual(inputs[0].shape.as_list(), [None, None])
+        self.assertEqual(inputs[1].shape.as_list(), [None, None, 7])
+        self.assertEqual(embd_layer.shape.as_list(), [None, None, 350])
         inputs, embd_layer = get_embedding_layer(
             word_dict_len=3,
             char_dict_len=5,
@@ -130,9 +130,9 @@ class TestGetEmbeddingLayer(unittest.TestCase):
             char_mask_zero=False,
         )
         self.assertEqual(len(inputs), 2)
-        self.assertEqual(inputs[0]._keras_shape, (None, None))
-        self.assertEqual(inputs[1]._keras_shape, (None, None, 7))
-        self.assertEqual(embd_layer._keras_shape, (None, None, 330))
+        self.assertEqual(inputs[0].shape.as_list(), [None, None])
+        self.assertEqual(inputs[1].shape.as_list(), [None, None, 7])
+        self.assertEqual(embd_layer.shape.as_list(), [None, None, 330])
 
     def test_not_implemented(self):
         with self.assertRaises(NotImplementedError):

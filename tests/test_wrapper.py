@@ -1,7 +1,7 @@
 import unittest
 import os
-import keras
 import numpy as np
+from keras_wc_embd.backend import keras
 from keras_wc_embd import WordCharEmbd
 
 
