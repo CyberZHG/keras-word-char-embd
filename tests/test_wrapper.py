@@ -1,7 +1,9 @@
 import unittest
 import os
+
 import numpy as np
-from keras_wc_embd.backend import keras
+from tensorflow import keras
+
 from keras_wc_embd import WordCharEmbd
 
 

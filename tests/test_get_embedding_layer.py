@@ -1,6 +1,8 @@
 import unittest
+
 import numpy
-from keras_wc_embd.backend import keras
+from tensorflow import keras
+
 from keras_wc_embd import get_embedding_layer
 
 

@@ -1,8 +1,5 @@
 # Word/Character Embeddings in Keras
 
-[![Travis](https://travis-ci.org/CyberZHG/keras-word-char-embd.svg)](https://travis-ci.org/CyberZHG/keras-word-char-embd)
-[![Coverage](https://coveralls.io/repos/github/CyberZHG/keras-word-char-embd/badge.svg?branch=master)](https://coveralls.io/github/CyberZHG/keras-word-char-embd)
-
 ## Introduction
 
 ![image](https://user-images.githubusercontent.com/853842/43352939-c84b9724-925e-11e8-9488-29ef159a69ed.png)
@@ -61,7 +58,7 @@ You can generate dictionaries on your own, but make sure index `0` and index for
 Generate the first few layers that encodes words in a sentence:
 
 ```python
-import keras
+from tensorflow import keras
 from keras_wc_embd import get_embedding_layer
 
 inputs, embd_layer = get_embedding_layer(
@@ -82,7 +79,7 @@ The output shape of `embd_layer` should be `(None, None, 600)`, which represents
 `char_hidden_layer_type` could be `'lstm'`, `'gru'`, `'cnn'`, a Keras layer or a list of Keras layers. Remember to add `MaskedConv1D` and `MaskedFlatten` to custom objects if you are using `'cnn'`:
 
 ```python
-import keras
+from tensorflow import keras
 from keras_wc_embd import MaskedConv1D, MaskedFlatten
 
 keras.models.load_model(filepath, custom_objects={

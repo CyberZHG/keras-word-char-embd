@@ -1,4 +1,5 @@
 import unittest
+
 from keras_wc_embd import get_word_list_eng
 
 

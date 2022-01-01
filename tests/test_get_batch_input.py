@@ -1,4 +1,5 @@
 import unittest
+
 from keras_wc_embd import get_batch_input
 
 
